@@ -163,7 +163,7 @@ code to be executed
 
 `Object.keys(object name)[i]` - `i` is used to increment the keys and print desired key.
 
-# CH-4 STRINGS
+# STRINGS
 
 1. Strings are a collection of characters.
     - `stringVariable.length` // prints the length of the string
@@ -191,7 +191,7 @@ code to be executed
 
 Strings are immutable.
 
-# CH-5 ARRAYS
+# 5 ARRAYS
 
 Arrays are variables which can hold more than one value. 
 
@@ -418,7 +418,7 @@ Matches,Closest & Contains
 2. `element.closest(css)` - to look for the nearest ancestor that matches the CSS selector. First of all, the element itself is also checked.
 3. `element.contains(element)` - returns true if element B is inside element A (a descendent of element A ) or if element A == element B.
 
-# CH-8 Events and other DOM properties
+#  Events and other DOM properties
 
 - `console.dir()` shows an element as an object with its properties
 - `element.tagName` returns tag name of an element
@@ -866,3 +866,472 @@ Cookies have several options which can be provided after key=value to a set call
  1. The name=value in cookie should not exceed 4kb
  2. Total number of cookies in browser is limited to 20+(generally depends on the browser)
 
+### LocalStorage in JAVASCRIPT
+LocalStorage is a webstorage object which are not sent to server with each request this data survives a full site refresh and a full browser restart
+
+Methods provided by localStorage
+1. `localStorage.setItem(key,value)` - store key/value pair
+2. `localStorage.getItem(key)` - get the value by key
+3. `localStorage.removeItem(key)` - removes the key with its value
+4. `localStorage.clear()` - clears everything
+5. `localStorage.key(index)` - get the key on the given position
+6. `localStorage.length` - returns number of stored items 
+
+We can get and set values of localStorage as an object also like -
+```javascript
+                localStorage.one=1
+                alert(localStorage.one)
+                delete localStorage.one
+```    
+
+Notes-
+1. both keys and values should be strigs in localStorage
+2. we can use the two json methods to store objects in localStorage
+
+`JSON.Stringify(object)` - convert objects to json strings
+
+`JSON.parse(string)` - converts string to objects (must be a valid json)
+
+### SessionStorage
+Used less often than localStorage. properties and methods are same as localStorage but
+1. the SessionStorage exists only in current browser tab another tab with same page will have a different storage.
+2. the data survives page refresh, but not closing/opening tab
+
+### StorageEvent
+When the data gets updated in localStorage or SessionStorage storage event triggers with these properties
+1. `key` - the key
+2. `oldValue` - previous value
+3. `newValue` - new value
+4. `Url` - page Url
+5. `StorageArea` - local or session storage
+
+We can listen the onstorage event of window which is triggered when the updates are made from the same storage from other document
+
+# Object Oriented Programming 
+In programming we often take something and then extend it for example we might want to create an user object and "admin" and "guest" will be slightly modified versions of it.
+
+### [[Prototype]]
+JAVASCRIPT objects have a specified property called prototype that is either null or references other object when we try to read a property from a object and its missing JAVASCRIPT automatically takes it from the prototype this is called "prototypal inheritance"
+        
+### Setting a Prototype
+We can set a prototype by setting  __proto__ now if we read a property from an object which is not in a object JAVASCRIPT automatically takes it from the prototype.
+```javascript
+            example-
+                let a = {
+                name: "chetan",
+                language: "javascript"
+                }
+                let p = {
+                run: () => {
+                    alert(1)
+                }
+                }
+
+                a.__proto__ = p
+                a.run() // finds in itseld the run property if not present takes it from the prototype i.e p
+```
+If property is not found in prototype of a also then it will go ahead and go inside the prototype of the assigned prototype and find it.
+
+### Classes & objects
+In object oriented programming a class is a extra feasible program-code template for creating objects, providing initial values for state(member,variables) and implementation of behaviour(member functions)
+
+The basic syntax for writing a class is :
+```javascript
+                Class myclass{
+                    //class methods
+                    constructor(){}
+                    method1(){}
+                    method2(){}
+                }
+```
+
+We can also use this.anything to take parameter from method directly
+```javascript
+            formfill(anything,anything1){
+                this.name(kuch bhi likhlo)=anything // stores value of arguments to this.name
+                this.age(kuch bhi likhlo)=anything1 // stores value of arguments to this.age
+            }
+``` 
+
+Example-
+```javascript
+                    class newform {
+                    submit() {
+                        alert("form submitted")
+                    }
+                    cancel() {
+                        alert(this.name + "form cancelled")
+                    }
+                    formfill(thisname) {
+                        this.name = thisname
+                    }
+                    }
+                    let chetan = new newform()
+                    chetan.formfill("chetan")
+                    let chetan1 = new newform() // the new keyword first of all makes this.anything in code to point towards local from global and also creates a copy of the class and hands it to the variable
+                    chetan1.formfill("chetan1")
+                    chetan.submit()
+                    chetan1.submit()
+                    chetan1.cancel()
+```
+
+### The constructor method()
+The constructor method is called automatically by new so that we can initialize the object there `(.methodname )` lgaane ki zrrurt he ni har baar class call hogi to chlega
+
+### Class inheritance
+Class inheritance is a way for one class to extend another class. This is done by using the extends keyword
+
+### The extends keyword
+ This keyword is used to extend another class (class Child extends Parents)
+ 
+ We can create a class monkey that inherits from animals
+ 
+Example-
+```javascript
+                 class animals{
+                    constructor(name,color){
+                        this.name=name
+                        this.color=color
+                    }
+                    shout(){
+                        console.log(this.name+" is shouting")
+                    }
+                 }
+                 class monkey extends animals{
+                    banana(){
+                        console.log(this.name+" is eating banana")
+                    }
+                 }
+                 let monkey=new monkey("monkey","red")
+                 let bear=new animal("bear","white")
+                 monkey.shout() // still able to call because we used extends
+```
+
+### Method Over-riding
+```javascript
+            class employee {
+            login() {
+                console.log(`employee has logged in`)
+            }
+            logout() {
+                console.log(`employee has logged out`)
+            }
+            reqleaves(leaves) {
+                console.log(`employee has requested ${leaves} leaves`) //initial method
+            }
+            }
+
+            class Programmer extends employee {
+            requestcoffee(x) {
+                console.log(`employee has requested ${x} coffees`)
+            }
+            reqleaves(leaves) {
+                console.log(`employee has requested ${leaves + 1} leaves (one extra)`) //overriding existing method but will work for only this class
+                                                    or 
+                                we can use super keyword to call parent method and modify it
+                super.reqleaves(4)
+                console.log("one extra granted") 
+            }
+            }
+```
+
+Whenever the inherited class does not assign any constrcutor javascript automatically gives it the parent class constrcutor looks like-
+```javascript
+         inherit class{
+            constructor(args){
+                super(args)
+            }
+         }
+```
+### Overriding the constructor
+With the constrcutor things are a bit tricky/different according to the specification if a class extends another class and has no constructor then he following emty constructor is generated-
+```javascript
+                 child class{
+            constructor(args){
+                super(args)     // happens if we dont write our consructor
+            }
+         } 
+```
+
+Constructors in inheriting class must call super (..) and do it before using `this.anything` we also use super.method in child class to call a method from parent class
+
+### Static methods 
+Static methods aren't available for individual objects but can be used by child classes
+
+Example-
+```javascript
+                class animal {
+                constructor(name) {
+                    this.name = animal.capatlize(name)
+                }
+                walk() {
+                    console.log(this.name + " is walking")
+                }
+                static capatlize(name) {        // defining static function for class
+                    return name.charAt(0).toLocaleUpperCase() + name.substr(1, name.length)
+                }
+                }
+
+                class enimal2 extends animal {
+                run() {
+                    console.log(this.name + " is running")
+                }
+                }
+
+                let c = new enimal2("raju")
+                c.run()
+```
+
+# Getters and Setters
+Example-
+```javascript
+                class animal {
+                constructor(name) {
+                    this._name = name
+                }
+                fly() {
+                    console.log("mein ud rha hu")
+                }
+                get name() {
+                    return this._name
+                }
+                set name(newname) {
+                    this._name = newname
+                }
+                }
+
+                let a = new animal("rocky")
+                console.log(a.name)
+                a.name = "fockky"
+                console.log(a.name)
+```
+
+### Instance of operator
+The instance of operator allows to check whether an object belongs to a certain class
+
+  `<obj>` instanceof `<class>`
+  
+It returns true if it belongs to the class or any other class inheriting from it
+        
+# Advanced javascript
+### IIFE 
+IIFE is a javascript function that runs as soon it is defined
+
+Syntax -
+```javascript
+                (function(){
+                    code
+                    code
+                })();
+```   
+
+It is used to avoid polluting the global namespace,execute an async await etc
+
+### Destructuring
+Destructuring assignment is used to unpack values from an array , or properties from objects into distinct variables
+
+Syntax-
+```javascript
+                    let [x,y]=[7,20]
+                    x will be 7 and y will be 20
+                    [10,x,...rest]=[10,80,7,11,21,28]          //...rest is keyword
+                    x will be 80 rest will be [7,11,21,28]
+                    and if console.log(rest) it will print all extra elements
+                    if we want rest value should start from 11 we can do something like this
+                        [a,,,...rest]=[10,80,7,11,21,28]  // we are leaving blank spaces by , for unwanted elements
+```
+
+Similarly we can destructure objects on the left hand side of the assignment
+                        const {a,b}={a:1,b:2}
+            
+### Spread Syntax
+Spread syntax allows an iterable such as an array or string to be expanded in places where zero or more arguments are expected. In an object literal the spread syntax enumerates the properties of an object and adds the key value pairs to the object being created.
+Example-
+```javascript
+                arr1=[1,4,56,78,43]
+                let obj1={...arr1} // will give output{0:1,1:4,2:56,3:78,4:43} creates an array
+                example-
+                    let obj={
+                    name:"chetan",
+                    company:"xyz",
+                    add:443
+                    }
+                    console.log({...obj,name:"rocky"})
+                    console.log({name:"rocky,...obj})     // wont work like this same print hojayega default
+                    console.log(obj)
+```
+
+### Local  global and block scope
+ Javascript has 3 types of scopes-
+1. block scope // local scope
+2. function scope // local scope
+3. global scope
+
+let and const provide block level scope which means the variables declared inside a {}
+cannot be accessed from outside the block
+```javascript
+                        {
+                            a=27
+                        }
+                        console.log(a) // will give an error 
+```
+
+### Hosting
+Hosting refers to a process whereby the interpreter appears to move the declarations to the top of the code before execution variables can thus be referenced before they are declared
+
+ Example-
+ ```javascript
+                greet() // calling before declaration still works
+                function greet(){
+                    console.log("welcome")
+                }
+```
+
+Javascript only hoists declarations not initialization. the variable will be undefined until the line  where its initialized is reached.
+```javascript
+                console.log(a)
+                var a =9
+                console.log(a) // will print undefined and then 9 only declaration goes up not initialization
+```            
+
+### Hosting with let and var
+With (let,const) and var hoisting is different
+```javascript
+                    console.log(a)
+                    let a = 9            // error cannot access before initialization
+                    console.log(a)
+
+                    console.log(a)
+                    var a=9              // prints undefined and then 9 no error
+                    console.log(a)
+```
+
+function expressions like 
+```javascript
+                    let abc=function(){
+                        code
+                    }
+
+                    or let abc=()=>{}
+                and class expressions are not hoisted
+                    let abc =class{
+                        code
+                    }
+```
+
+### Closures
+A closure is a combination of functions bundeled together (enclosed) with reference to its surrounding state. or in other words in javascript closures are created everytime a function is created.
+```javascript
+                example-
+                    function init() {
+                    let name = "mozilla"
+                    function rock() {
+                        console.log(name)
+                    }
+                    name="mozilla2"
+                    return rock
+                    }
+                    c = init()             // here rock function is returned to c along with its laxical environment such as name variable
+                    c()
+```
+
+```javascript
+        let obj={
+            any object
+            function(){
+                this.name // here this will refer to obj
+                setTimeOut(function(){
+                    this.name // this will not run as its function inside function and it refers to window object
+                })
+            }
+        }
+```
+
+To solve this use arrow function-
+```javascript
+            let obj={
+            any object
+            function(){
+                this.name // here this will refer to obj
+                setTimeOut(()=>{
+                    this.name // this will now run as arrow function returns lexical environment
+                })
+            }
+        }
+```
+
+### JAVASCRIPT ON server
+Javascript is used on frontend(interacts with browser on runtime) nodejs is used on backend(interacts with os at runtime)
+
+### Modules in JAVASCRIPT
+Consider modules as same as javascript libraries, a set of functions you want to use and include in your applications. one module can be use in varoud js files collectively by developers. To create a module-
+
+Create a module that returns the current date and time:
+```javascript
+
+                function module1 () {
+                return Date();
+                };
+                module.exports=module1
+
+                to call that module in other file
+                    let hello=require("./filename without .js containing the module")
+                    hello()
+            example-
+            FILE1-
+                let hello=()=>{
+                    console.log("hello")
+                }
+                let advhello=(name)=>{
+                    console.log("hello"+name)
+                }
+                module.exports={hello,advhello}  // exporting both functions
+
+            FILE2-
+                let {hello,advhello}=require("./main")  // main is a file name main.js containing module
+                advhello("chetan")
+                hello()
+```
+
+### ES-6 modules
+```javascript
+        //FILE1-
+            export let hello=()=>{
+                console.log("hello")
+            }
+            export let advhello=(name)=>{
+                console.log("hello"+name)
+            }
+        //FILE2-  
+            import {hello,advhello} from "./main.js"
+            hello()
+            advhello("chetan")
+```
+
+If we export a function as deafult in es-6 modules we wont need to import it as objects in another file like{func1,func2} we can directly say import defaultfunc1 from "./file.js"
+
+Example-
+```javascript
+        //FILE1-
+            let defaultfunc=()=>{
+            console.log("hello chetan")
+             }
+            export default defaultfunc;
+        //FILE2-
+        import defaultfunc from "./main.js"
+        defaultfunc()
+```  
+
+### REGEX
+```javascript
+        let regex=/chetan*/gi         // website to test regexr.com
+        let string="chetan is a very very good boy chetan"
+        console.log(string.replace(regex,"CHETAN")) // coverts 'chetan' to 'CHETAN' globally
+```
+### EVENT Loop
+Javascript executes one thing ata a time to support some parallel execution like set timeout the concept used is as follows-
+1. Everything that comes the way to execute is pushed to the call stack ( a function and function inside function)
+2. Then the function with a delay is pushed to the webapi like setTimeOut
+3. While the function waits till the timer other code is executed
+4. Once timer gets over the webapi pushes the function to the call back queue
+5. Then the event loop picks the function from the call back queue and send to stack for final execution
