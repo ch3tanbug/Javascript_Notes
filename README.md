@@ -191,7 +191,7 @@ code to be executed
 
 Strings are immutable.
 
-# 5 ARRAYS
+# ARRAYS
 
 Arrays are variables which can hold more than one value. 
 
